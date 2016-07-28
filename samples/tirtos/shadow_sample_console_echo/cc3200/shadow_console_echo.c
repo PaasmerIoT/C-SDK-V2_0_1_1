@@ -113,6 +113,17 @@ void runAWSClient(void)
      */
     rc = aws_iot_shadow_register_delta(&mqttClient, &deltaObject);
 
+    /*
+     *  Workaround for shadow updates getting out of sync:
+     *
+     *  WARN:  shadow_delta_callback L#504 Old Delta Message received -
+     *  Ignoring rx: 40408 local: 40408
+     *  
+     *  See discussion here:
+     *     https://github.com/aws/aws-iot-device-sdk-embedded-C/issues/32
+     */
+    aws_iot_shadow_disable_discard_old_delta_msgs();
+
     /* Now wait in the loop to receive any message sent from the console */
     while (NETWORK_ATTEMPTING_RECONNECT == rc || NETWORK_RECONNECTED == rc ||
             SUCCESS == rc) {
