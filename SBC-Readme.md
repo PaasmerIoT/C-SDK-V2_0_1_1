@@ -5,8 +5,8 @@
 
 * Download the SDK or clone it using the command below.
 ```
-$ git clone github.com/PaasmerIoT/SBC-CC3200-SDK.git
-$ cd SBC-CC3200-SDK
+$ git clone https://github.com/PaasmerIoT/C-SDK-V2_0_1_1.git
+$ cd C-SDK-V2_0_1_1
 ```
 
 * To connect the device to Paasmer IoT Platfrom, the following steps need to be performed.
@@ -70,4 +70,4 @@ The support forum is hosted on the GitHub, issues can be identified by users and
 
 ## Note:
 
-The Paasmer IoT SBC-CC3200-SDK utilizes the features provided by AWS-IOT-SDK for C.
+The Paasmer IoT C-SDK-V2_0_1_1 utilizes the features provided by AWS-IOT-SDK for C.
