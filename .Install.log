@@ -1,0 +1,28 @@
+Logfile for Installing Paasmer...
+/home/mdubuntu/Videos/final-SBC-CC3200-SDK/SBC-CC3200-SDK
+/home/root
+--> Installing...\n
+--> Installing requerments.......
+Configuring data...
+"a3rwl3kghmkdtx.iot.us-west-2.amazonaws.com"
+sbcCC3200Test
+{ "thingArn": "arn:aws:iot:us-west-2:039065299133:thing/sbcCC3200Test", "thingName": "sbcCC3200Test" }
+{
+    "certificateArn": "arn:aws:iot:us-west-2:039065299133:cert/c9568452773dfe92f7117baa2fc4c28efd2627da269d04a1ef393e86938ecc4e", 
+    "certificatePem": "-----BEGIN CERTIFICATE-----\nMIIDWTCCAkGgAwIBAgIUfofTLW/LPJJEV65E9QliN3MFb8wwDQYJKoZIhvcNAQEL\nBQAwTTFLMEkGA1UECwxCQW1hem9uIFdlYiBTZXJ2aWNlcyBPPUFtYXpvbi5jb20g\nSW5jLiBMPVNlYXR0bGUgU1Q9V2FzaGluZ3RvbiBDPVVTMB4XDTE3MDYzMDA3MDMx\nNVoXDTQ5MTIzMTIzNTk1OVowHjEcMBoGA1UEAwwTQVdTIElvVCBDZXJ0aWZpY2F0\nZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMFU1mFsvNxPrAW+fJcy\n9bzsEzGrFX0u/aLRfkfA3hwyAuario6kshSiB7sLm3S+nGPOClWaEGmMKr6Sb8nh\nEpo4G8s9q0vPxTJ0lzwxb+ko+5mLXjA2y+VGSOPdGYvWlbQhUjM4AnJCiLeuHg1v\nVxalQYIhiXJwT5RGM6G+/LMMpyQYHMCsb0r68znSeCG7ZzMrx9ZCZuiFtYh4qyJw\nM7nJpBCIPEXOU+sTF4vn1NbtEJpT4cfv3Sj1qfzfCM7ewTX+aSF+Ndanpu8rCXM7\nPAyuK2Cv8u3l0z2ee/wW/FK+6VHsw0qVQXDTDcij7IX0+ZaS1/jAXdxkryhbX8G+\nz4cCAwEAAaNgMF4wHwYDVR0jBBgwFoAUgGg+YFMJZQBDCFF76pWbTu22VT4wHQYD\nVR0OBBYEFK4pwKLLone+vjPU6q4jA7n/kxrKMAwGA1UdEwEB/wQCMAAwDgYDVR0P\nAQH/BAQDAgeAMA0GCSqGSIb3DQEBCwUAA4IBAQBhgkBrvaJw7AFLOe3hNoIFEgrK\ngGxUT1j0z4t49lUlyJDtVD/EXmzjjaTk0U1+Ecb88h/1Nd2hnWksbrA5UPaFlZjQ\nfy3Tc3FycwQBOYqriabRa+PfB2KI01YDwYvGcv3eqxiGhZwWpok4pDgAVE51Qpfq\nbdv+mQYMzmXJKTmzOjCqiqeLcbUngXgevpPEPdqweUDb1I1kNXoAb4Yuo/B4kuRM\nbK7wOuWcLleY2LYDYicnk436j6HvTPRqxDJAWRgkV54PutGlBz1y5FCK0Aas/6ld\n1LLrhT6OGfF3S4AhIR9ipLjRxvLq4M6EEdI8qLQjopNpyD6RfMB/a1HkBSRB\n-----END CERTIFICATE-----\n", 
+    "keyPair": {
+        "PublicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwVTWYWy83E+sBb58lzL1\nvOwTMasVfS79otF+R8DeHDIC5quKjqSyFKIHuwubdL6cY84KVZoQaYwqvpJvyeES\nmjgbyz2rS8/FMnSXPDFv6Sj7mYteMDbL5UZI490Zi9aVtCFSMzgCckKIt64eDW9X\nFqVBgiGJcnBPlEYzob78swynJBgcwKxvSvrzOdJ4IbtnMyvH1kJm6IW1iHirInAz\nucmkEIg8Rc5T6xMXi+fU1u0QmlPhx+/dKPWp/N8Izt7BNf5pIX411qem7ysJczs8\nDK4rYK/y7eXTPZ57/Bb8Ur7pUezDSpVBcNMNyKPshfT5lpLX+MBd3GSvKFtfwb7P\nhwIDAQAB\n-----END PUBLIC KEY-----\n", 
+        "PrivateKey": "-----BEGIN RSA PRIVATE KEY-----\nMIIEpAIBAAKCAQEAwVTWYWy83E+sBb58lzL1vOwTMasVfS79otF+R8DeHDIC5quK\njqSyFKIHuwubdL6cY84KVZoQaYwqvpJvyeESmjgbyz2rS8/FMnSXPDFv6Sj7mYte\nMDbL5UZI490Zi9aVtCFSMzgCckKIt64eDW9XFqVBgiGJcnBPlEYzob78swynJBgc\nwKxvSvrzOdJ4IbtnMyvH1kJm6IW1iHirInAzucmkEIg8Rc5T6xMXi+fU1u0QmlPh\nx+/dKPWp/N8Izt7BNf5pIX411qem7ysJczs8DK4rYK/y7eXTPZ57/Bb8Ur7pUezD\nSpVBcNMNyKPshfT5lpLX+MBd3GSvKFtfwb7PhwIDAQABAoIBAEMqJhBSpoojY6/b\nLY2ZtqWbnk9zEFQdLyCRhz2GU6OX/EoG7mv/654fbHAe6DL2xX4m5pA2pd0FRRRP\n62ZHOx84vu8szYXY+Lk+qAvRYP+vrTj6og49+zf74vbGqUlbk0axDM2ed7saQkUN\nyIMCW08Sul9rJ0UKn5rziJx4rXHGKBdodRiwII2NvKfHL62FTTHqvl1GiEIPiQRd\nnZtzG2zK+a8ihSJzOyt1Z6ZMtVWg3y5BpwmceGOvbJluw/+O3IjARMA5Vt006h7V\nz6FxrCNf63LZ2yOwifCWnUnUGXkL7NhSP/E9qpDMRF2B4eklm8zfXuVQ6tB+pz8c\nPzwOTAECgYEA92qvb/I4e6eUo0IDkqMedP2tTLClqbd0pv90ffG13BL6BElMYdPG\nnPalIelAqkFzsbjWbAbdF+aaMTZwRbDix7xtEN8CHuFwKd1c/DmmcCxDtEHMwJil\n7CYFcjmQNwRy1vQBH8/3TiA+fSqKIaT7gvesSU/jAyIBUM1c36r4UeECgYEAyAnR\nmNMSV1RxK+z4jMAKkM0P1qBuFREi7CFRgxTVykAD5xXku6BZxs0GTR2oHWy/Hk5S\nOVxJ+lQUaE3zYOjhkqpbZwGPzJW8iIqFB2Lxpx60xyVN5p883vvjAGZmtgvaTsQd\nYOBJzbuLgwPa1V52FF3UnVvebq5of6mSZejtnmcCgYEAsi7VFgwdfYBc3Y6HQC3V\nm2+uRRLa2/VRP4ut+5392PaZtEiNh86atSQ0HM39UiA9D/sMAVSYGcRru5F3Hdmc\nGTisW4Af6Nl2i8/uTX+/S/207LaOnQ3SQNXJClBGejjr875aqOx/MHasSjw+qqhE\nsjdojovH89OjmuurPTHGEEECgYAFJvuXDBi01x/zGa9tMKUVBbMavBcZw886dcE7\ntxWql+uB0DaL/p1RWYaIBfOGjn59sVa803u0TuYXqapTHKxysqCYDpo9kr3AZpD2\nl73RqCDP4E4ZWpCeza4THJAYsEV3MeXv0NcVzXbScQ753+z6qVAInY0lHKjkYOG8\nbjtwkQKBgQDe46J9j5+zOjlW+pY9iXpC64ZNHkclQGPiWS61qmyIYjjbPHVZ3VZh\nt6ajwjeX5U9s9o3Htsf6r1/exNZ2ir+C8Ev2K84hQh4d5ekVkAabkrALO1i+ngKS\nxPHAbhnlZ8EJ+xw36f8xEEg+xP8tPvpwBrkOmeIr3xS/Ov/GMcy3/Q==\n-----END RSA PRIVATE KEY-----\n"
+    }, 
+    "certificateId": "c9568452773dfe92f7117baa2fc4c28efd2627da269d04a1ef393e86938ecc4e"
+}
+"arn:aws:iot:us-west-2:039065299133:cert/c9568452773dfe92f7117baa2fc4c28efd2627da269d04a1ef393e86938ecc4e"
+{
+    "policyName": "sbcCC3200Test", 
+    "policyArn": "arn:aws:iot:us-west-2:039065299133:policy/sbcCC3200Test", 
+    "policyDocument": "{ \"Version\": \"2012-10-17\", \"Statement\": [{\"Action\": [\"iot:*\"], \"Resource\": [\"*\"], \"Effect\": \"Allow\" }] }", 
+    "policyVersionId": "1"
+}
+Added to PAASMER-CC3200 alias...\n
+File Transfered successfully....
+sbcCC3200Test

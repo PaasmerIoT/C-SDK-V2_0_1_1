@@ -44,6 +44,9 @@
 
 extern void NetWiFi_init(void);
 extern void runAWSClient(void);
+extern void feedadd();
+//extern void print();
+//extern void add(char *feednames,char *feedtypes,char *feedbases,char *feedpins);
 
 /*
  *  ======== slTask ========
@@ -80,9 +83,12 @@ void slTask(unsigned int arg0, unsigned int arg1)
      */
     UARTUtils_systemInit(0);
 
+feedadd();
+
     /* Initialize SimpleLink */
     NetWiFi_init();
-
+	System_printf("paasmer sdk going to aws........\n");
+	//feedadd();
     runAWSClient();
 }
 
@@ -100,9 +106,10 @@ int main(int argc, char *argv[])
     Board_initWiFi();
 
     GPIO_write(Board_LED0, Board_LED_ON);
-
+	System_printf("paasmer sdk......../n");
     Task_Params_init(&taskParams);
-    taskParams.stackSize = 4096;
+    //taskParams.stackSize = 4096;
+    taskParams.stackSize = 5120;
 
     taskHandle = Task_create((Task_FuncPtr)slTask, &taskParams, NULL);
     if (taskHandle == NULL) {

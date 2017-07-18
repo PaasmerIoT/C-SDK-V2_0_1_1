@@ -31,11 +31,137 @@
 #include <unistd.h>
 #include <limits.h>
 #include <string.h>
+#include <jsmn.h>
+
 
 #include "aws_iot_config.h"
 #include "aws_iot_log.h"
 #include "aws_iot_version.h"
 #include "aws_iot_mqtt_client_interface.h"
+
+#include "config.h"
+#include "mac.h"
+#include "paasmerGpio.h"
+
+
+
+int sensordetails=1,msgCount=0;
+/////added for new architecture
+typedef struct feed
+{
+	struct feed *pre;
+	char feedname[20];
+	char feedtype[10];
+	int feedpin;
+	struct feed *next;
+}FD;
+
+FD *hptr=NULL;
+void feedadd();
+void print();
+void add(char *feednames,char *feedtypes,int feedpins);
+void add(char *feednames,char *feedtypes,int feedpins)
+{
+	FD *new,*old;
+	new=(FD *)malloc(sizeof(FD));
+	strcpy(new->feedname,feednames);
+	strcpy(new->feedtype,feedtypes);
+        new->feedpin=feedpins;
+	if(hptr==NULL)
+	{
+	new->next=hptr;
+	new->pre=hptr;
+	hptr=new;
+	}
+	else
+	{
+	old=hptr;
+
+	while(old->next!=NULL)
+	old=old->next;	
+
+	new->next=old->next;
+	old->next=new;
+	new->pre=old;
+	}
+}
+void feedadd(){
+
+	int i=0,j=0;
+	j = sizeof(feedname)/sizeof(feedname[0]);
+	printf("j value is %d\n",j);
+	do{
+		//if(feednamess[i]){
+		add(feedname[i],feedtype[i],feedpin[i]);
+		IOT_INFO("feedname=%s,feedtype=%s,feedpin=%d",feedname[i],feedtype[i],feedpin[i]);//}
+		if(!strcmp(feedtype[i],"actuator"))
+			gpioModesetup(feedpin[i],"OUT");
+		else
+			gpioModesetup(feedpin[i],"IN");
+		i++;
+		IOT_INFO("%d",i);
+	}while(i<j);
+	print();
+	#ifdef AWS_IOT_MY_THING_NAME
+	    #define AWS_IOT_MY_THING_NAME DeviceName
+	#endif
+
+	#ifdef AWS_IOT_MQTT_CLIENT_ID 
+	    #define AWS_IOT_MQTT_CLIENT_ID DeviceName
+	#endif
+}
+void print()
+{
+	FD* ptr=hptr;
+//	struct feed* ptr=hptr;
+int a[3],msgscount=0;
+char cPayload[1024],b[512],c[512],credentials[512];
+	while(ptr){
+		IOT_INFO("this is in print function");
+		snprintf(cPayload,sizeof(cPayload),"{\n\"feed1\":\"%s\",\n\"feed1type\":\"%s\",\n\"feed1pin\":\"%d\",\"feed1value\":\"%d\",",ptr->feedname,ptr->feedtype,ptr->feedpin,ptr->feedpin);
+//		a[0]=1;
+		printf("%s\n",cPayload);
+		ptr=ptr->next;
+		if(ptr)
+		{
+		IOT_INFO("this is in second node");
+		snprintf(b,sizeof(b),"\n\"feed2\":\"%s\",\n\"feed2type\":\"%s\",\n\"feed2pin\":\"%d\",\"feed2value\":\"%d\",",ptr->feedname,ptr->feedtype,ptr->feedpin,ptr->feedpin);
+
+		strcat(cPayload,b);
+		printf("%s",cPayload);
+		ptr=ptr->next;
+		}
+		else
+		{
+		snprintf(b,sizeof(b),"\n\"feed2\":\"\",\n\"feed2type\":\"\",\n\"feed2pin\":\"\",\n\"feed2value\":\"\",\n");
+		strcat(cPayload,b);
+		
+		}
+		if(ptr){
+		snprintf(c,sizeof(c),"\n\"feed3\":\"%s\",\n\"feed3type\":\"%s\",\n\"feed3pin\":\"%d\",\n\"feed3value\":\"%d\"\n}",ptr->feedname,ptr->feedtype,ptr->feedpin,ptr->feedpin);
+	
+		strcat(cPayload,c);
+		printf("%s",cPayload);
+		//printf("%s",c);
+		ptr=ptr->next;
+		
+		}
+		else{
+		
+		snprintf(c,sizeof(c),"\n\"feed3\":\"\",\n\"feed3type\":\"\",\n\"feed3pin\":\"\",\n\"feed3value\":\"\"}");
+		strcat(cPayload,c);
+		printf("\nEof linkedlist\n");}
+		snprintf(credentials,sizeof(credentials),"messagecount = %d",msgscount);
+		strcat(cPayload,credentials);
+		IOT_INFO("%s",cPayload);
+		strcpy(cPayload,"\0");
+		msgscount++;
+		
+		
+	}
+}
+
+
 
 /**
  * @brief Default cert location
@@ -63,6 +189,38 @@ void iot_subscribe_callback_handler(AWS_IoT_Client *pClient, char *topicName, ui
 	IOT_UNUSED(pClient);
 	IOT_INFO("Subscribe callback");
 	IOT_INFO("%.*s\t%.*s", topicNameLen, topicName, (int) params->payloadLen, params->payload);
+
+////added for new architecture to control controlFeeds
+	FD *ptrs=hptr;
+	while(ptrs)
+	{
+		if(!strncmp(params->payload,ptrs->feedname,strlen(ptrs->feedname)))
+		{
+			if(strstr(params->payload,"on"))
+			{
+				gpioWrite(ptrs->feedpin,1);
+				IOT_INFO("%s turned on",ptrs->feedname);
+				//break;
+				
+			}
+			else if(strstr(params->payload,"off"))
+			{
+				gpioWrite(ptrs->feedpin,0);
+				IOT_INFO("%s turned off",ptrs->feedname);
+			}
+			//else;
+			break;
+
+		}
+		else
+		{
+			ptrs=ptrs->next;
+		}
+
+
+	}
+
+////////////
 }
 
 void disconnectCallbackHandler(AWS_IoT_Client *pClient, void *data) {
@@ -127,13 +285,22 @@ void parseInputArgsForConnectParams(int argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
-	bool infinitePublishFlag = true;
 
+gpioSetup();
+
+
+feedadd();
+
+ 
+
+  
+	bool infinitePublishFlag = true;
+	int timedelay=1;
 	char rootCA[PATH_MAX + 1];
 	char clientCRT[PATH_MAX + 1];
 	char clientKey[PATH_MAX + 1];
 	char CurrentWD[PATH_MAX + 1];
-	char cPayload[100];
+	char cPayload[512];
 
 	int32_t i = 0;
 
@@ -148,12 +315,12 @@ int main(int argc, char **argv) {
 
 	parseInputArgsForConnectParams(argc, argv);
 
-	IOT_INFO("\nAWS IoT SDK Version %d.%d.%d-%s\n", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, VERSION_TAG);
+	IOT_INFO("\nPAASMER IoT SDK Version %d.%d.%d-%s\n", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, VERSION_TAG);
 
 	getcwd(CurrentWD, sizeof(CurrentWD));
 	snprintf(rootCA, PATH_MAX + 1, "%s/%s/%s", CurrentWD, certDirectory, AWS_IOT_ROOT_CA_FILENAME);
-	snprintf(clientCRT, PATH_MAX + 1, "%s/%s/%s", CurrentWD, certDirectory, AWS_IOT_CERTIFICATE_FILENAME);
-	snprintf(clientKey, PATH_MAX + 1, "%s/%s/%s", CurrentWD, certDirectory, AWS_IOT_PRIVATE_KEY_FILENAME);
+	snprintf(clientCRT, PATH_MAX + 1, "%s/%s/%s%s", CurrentWD, certDirectory,DeviceName, AWS_IOT_CERTIFICATE_FILENAME);
+	snprintf(clientKey, PATH_MAX + 1, "%s/%s/%s%s", CurrentWD, certDirectory, DeviceName,AWS_IOT_PRIVATE_KEY_FILENAME);
 
 	IOT_DEBUG("rootCA %s", rootCA);
 	IOT_DEBUG("clientCRT %s", clientCRT);
@@ -172,7 +339,7 @@ int main(int argc, char **argv) {
 
 	rc = aws_iot_mqtt_init(&client, &mqttInitParams);
 	if(SUCCESS != rc) {
-		IOT_ERROR("aws_iot_mqtt_init returned error : %d ", rc);
+		IOT_ERROR("paasmer_iot_mqtt_init returned error : %d ", rc);
 		return rc;
 	}
 
@@ -201,13 +368,15 @@ int main(int argc, char **argv) {
 	}
 
 	IOT_INFO("Subscribing...");
-	rc = aws_iot_mqtt_subscribe(&client, "sdkTest/sub", 11, QOS0, iot_subscribe_callback_handler, NULL);
+	char sub_topic[100];
+	sprintf(sub_topic,"%s_%s",UserName,DeviceName);
+	rc = aws_iot_mqtt_subscribe(&client,sub_topic, strlen(sub_topic), QOS0, iot_subscribe_callback_handler, NULL);
 	if(SUCCESS != rc) {
 		IOT_ERROR("Error subscribing : %d ", rc);
 		return rc;
 	}
 
-	sprintf(cPayload, "%s : %d ", "hello from SDK", i);
+
 
 	paramsQOS0.qos = QOS0;
 	paramsQOS0.payload = (void *) cPayload;
@@ -231,23 +400,93 @@ int main(int argc, char **argv) {
 			continue;
 		}
 
-		IOT_INFO("-->sleep");
+		IOT_INFO("-->sleep!");
 		sleep(1);
-		sprintf(cPayload, "%s : %d ", "hello from SDK QOS0", i++);
-		paramsQOS0.payloadLen = strlen(cPayload);
-		rc = aws_iot_mqtt_publish(&client, "sdkTest/sub", 11, &paramsQOS0);
-		if(publishCount > 0) {
-			publishCount--;
-		}
+		
 
-		sprintf(cPayload, "%s : %d ", "hello from SDK QOS1", i++);
-		paramsQOS1.payloadLen = strlen(cPayload);
-		do {
-			rc = aws_iot_mqtt_publish(&client, "sdkTest/sub", 11, &paramsQOS1);
-			if(publishCount > 0) {
-				publishCount--;
-			}
-		} while(MQTT_REQUEST_TIMEOUT_ERROR == rc && (publishCount > 0 || infinitePublishFlag));
+if(UserName != "" && DeviceName !=""){
+if (sensordetails==1){
+if(((timedelay++)%timePeriod)==0){
+
+
+
+	////added for new architecture
+	char feed2Details[256],feed3Details[256],Credentials[256];
+				FD *ptr=hptr;
+				int feed1Value=0,feed2Value=0,feed3Value=0;
+
+				while(ptr){
+					
+					feed1Value = gpioRead(ptr->feedpin);
+					snprintf(cPayload,sizeof(cPayload),"{\n\"feeds\":[{\"feedname\":\"%s\",\n\"feedtype\":\"%s\",\n\"feedpin\":\"%d\",\"feedvalue\":\"%d\"},",ptr->feedname,ptr->feedtype,ptr->feedpin,feed1Value);
+
+					ptr=ptr->next;
+					feed1Value=0;
+					if(ptr)
+					{
+						
+						feed2Value = gpioRead(ptr->feedpin);
+						snprintf(feed2Details,sizeof(feed2Details),"\n{\"feedname\":\"%s\",\n\"feedtype\":\"%s\",\n\"feedpin\":\"%d\",\"feedvalue\":\"%d\"},",ptr->feedname,ptr->feedtype,ptr->feedpin,feed2Value);
+
+						strcat(cPayload,feed2Details);
+	
+						ptr=ptr->next;
+						feed2Value=0;
+						strcpy(feed2Details,"\0");
+					}
+					else
+					{
+						snprintf(feed2Details,sizeof(feed2Details),"\n{\"feedname\":\"\",\n\"feedtype\":\"\",\n\"feedpin\":\"\",\n\"feedvalue\":\"\"},\n");
+						strcat(cPayload,feed2Details);
+						
+					}
+					if(ptr)
+					{
+						
+						feed3Value = gpioRead(ptr->feedpin);
+						snprintf(feed3Details,sizeof(feed3Details),"\n{\"feedname\":\"%s\",\n\"feedtype\":\"%s\",\n\"feedpin\":\"%d\",\n\"feedvalue\":\"%d\"}],",ptr->feedname,ptr->feedtype,ptr->feedpin,feed3Value);
+					
+						strcat(cPayload,feed3Details);
+				
+						ptr=ptr->next;
+						feed3Value=0;
+						strcpy(feed3Details,"\0");
+						
+					}
+					else{
+		
+						snprintf(feed3Details,sizeof(feed3Details),"\n{\"feedname\":\"\",\n\"feedtype\":\"\",\n\"feedpin\":\"\",\n\"feedvalue\":\"\"}],");
+						strcat(cPayload,feed3Details);
+						printf("\nEof linkedlist\n");
+					}
+					snprintf(Credentials,sizeof(Credentials),"\"messagecount\": \"%d\",\"paasmerid\":\"%s\",\"username\":\"%s\",\"devicename\":\"%s\",\"devicetype\":\"SBC\"}",msgCount,MAC,UserName,DeviceName);
+					strcat(cPayload,Credentials);
+					IOT_INFO("%s",cPayload);
+					IOT_INFO("%d\n",msgCount);
+					
+					msgCount++;
+
+		
+					
+					paramsQOS1.payloadLen = strlen(cPayload);
+                rc = aws_iot_mqtt_publish(&client, "paasmerv2_device_online",23, &paramsQOS1);
+                if (rc == MQTT_REQUEST_TIMEOUT_ERROR) {
+                        IOT_WARN("QOS1 publish ack not received.\n");
+                        rc = SUCCESS;
+                }
+                if(publishCount > 0) {
+                        publishCount--;
+                }
+					
+					sleep(1);	
+				}
+
+	//////
+
+	
+}
+}}
+
 	}
 
 	if(SUCCESS != rc) {
@@ -255,6 +494,7 @@ int main(int argc, char **argv) {
 	} else {
 		IOT_INFO("Publish done\n");
 	}
+
 
 	return rc;
 }

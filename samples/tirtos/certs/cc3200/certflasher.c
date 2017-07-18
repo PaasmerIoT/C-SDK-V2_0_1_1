@@ -44,6 +44,7 @@
 #include <simplelink.h>
 
 #include "Board.h"
+#include "configure.h"
 
 #if defined(MSP430WARE) || defined(MSP432WARE)
 #define SPI_BIT_RATE    2000000
@@ -62,7 +63,33 @@
  *
  *            Paste the lines in string format for the following array:
  */
-const char root_ca_pem[] = "[ca certificate string]";
+/*const char root_ca_pem[] = 
+"MIIE0zCCA7ugAwIBAgIQGNrRniZ96LtKIVjNzGs7SjANBgkqhkiG9w0BAQUFADCB"
+"yjELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDlZlcmlTaWduLCBJbmMuMR8wHQYDVQQL"
+"ExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTowOAYDVQQLEzEoYykgMjAwNiBWZXJp"
+"U2lnbiwgSW5jLiAtIEZvciBhdXRob3JpemVkIHVzZSBvbmx5MUUwQwYDVQQDEzxW"
+"ZXJpU2lnbiBDbGFzcyAzIFB1YmxpYyBQcmltYXJ5IENlcnRpZmljYXRpb24gQXV0"
+"aG9yaXR5IC0gRzUwHhcNMDYxMTA4MDAwMDAwWhcNMzYwNzE2MjM1OTU5WjCByjEL"
+"MAkGA1UEBhMCVVMxFzAVBgNVBAoTDlZlcmlTaWduLCBJbmMuMR8wHQYDVQQLExZW"
+"ZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTowOAYDVQQLEzEoYykgMjAwNiBWZXJpU2ln"
+"biwgSW5jLiAtIEZvciBhdXRob3JpemVkIHVzZSBvbmx5MUUwQwYDVQQDEzxWZXJp"
+"U2lnbiBDbGFzcyAzIFB1YmxpYyBQcmltYXJ5IENlcnRpZmljYXRpb24gQXV0aG9y"
+"aXR5IC0gRzUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCvJAgIKXo1"
+"nmAMqudLO07cfLw8RRy7K+D+KQL5VwijZIUVJ/XxrcgxiV0i6CqqpkKzj/i5Vbex"
+"t0uz/o9+B1fs70PbZmIVYc9gDaTY3vjgw2IIPVQT60nKWVSFJuUrjxuf6/WhkcIz"
+"SdhDY2pSS9KP6HBRTdGJaXvHcPaz3BJ023tdS1bTlr8Vd6Gw9KIl8q8ckmcY5fQG"
+"BO+QueQA5N06tRn/Arr0PO7gi+s3i+z016zy9vA9r911kTMZHRxAy3QkGSGT2RT+"
+"rCpSx4/VBEnkjWNHiDxpg8v+R70rfk/Fla4OndTRQ8Bnc+MUCH7lP59zuDMKz10/"
+"NIeWiu5T6CUVAgMBAAGjgbIwga8wDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8E"
+"BAMCAQYwbQYIKwYBBQUHAQwEYTBfoV2gWzBZMFcwVRYJaW1hZ2UvZ2lmMCEwHzAH"
+"BgUrDgMCGgQUj+XTGoasjY5rw8+AatRIGCx7GS4wJRYjaHR0cDovL2xvZ28udmVy"
+"aXNpZ24uY29tL3ZzbG9nby5naWYwHQYDVR0OBBYEFH/TZafC3ey78DAJ80M5+gKv"
+"MzEzMA0GCSqGSIb3DQEBBQUAA4IBAQCTJEowX2LP2BqYLz3q3JktvXf2pXkiOOzE"
+"p6B4Eq1iDkVwZMXnl2YtmAl+X6/WzChl8gGqCBpH3vn5fJJaCGkgDdk+bW48DW7Y"
+"5gaRQBi5+MHt39tBquCWIMnNZBU4gcmU7qKEKQsTb47bDN0lAtukixlE0kF6BWlK"
+"WE9gyn6CagsCqiUXObXbf+eEZSqVir2G3l6BFoMtEMze/aiCKm0oHw0LxOXnGiYZ"
+"4fQRbxC1lfznQgUy286dUV4otp6F01vvpX1FQHKOtw5rDgb7MzVIcbidJ4vEZV8N"
+"hnacRHr2lVz2XTIIM6RUthg/aFzyQkqFOFSDX9HoLPKsEdao7WNq";*/
 
 /*
  * USER STEP: Copy the lines in the cert.pem certificate file between
@@ -73,7 +100,25 @@ const char root_ca_pem[] = "[ca certificate string]";
  *
  *            Paste the lines in string format for the following array:
  */
-const char client_cert_pem[] = "[client certificate string]";
+/*const char client_cert_pem[] = 
+"MIIDWjCCAkKgAwIBAgIVAIEokE5Cc2yM6xJA9yydxP1LixEKMA0GCSqGSIb3DQEB"
+"CwUAME0xSzBJBgNVBAsMQkFtYXpvbiBXZWIgU2VydmljZXMgTz1BbWF6b24uY29t"
+"IEluYy4gTD1TZWF0dGxlIFNUPVdhc2hpbmd0b24gQz1VUzAeFw0xNjEwMDMxMjA0"
+"NTBaFw00OTEyMzEyMzU5NTlaMB4xHDAaBgNVBAMME0FXUyBJb1QgQ2VydGlmaWNh"
+"dGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC1hEbeThcQb8Vsncl6"
+"fVl3f3uQg/qaTJMcTzJBDbs81h75iF9iXJPdS1sgqRlzkQOJ6CpuBvKf4srtX+vc"
+"AtGneWh4JteljdPGJVzXh49FgL9XEc14HnCYf8QT669aaLtSrztEyb26DwSi8daL"
+"jZqjTklntAgxvV3SbHPz7xG5258FpTwjt2iewO5H4D7oaquGOgKmOj6Ne9/adI8n"
+"Wjcn4HjWzPI4F2JytQxu+Vqow9zrsf2wu+fkd7UH1wNHD5MEL3gA3gNfMpkZWk8a"
+"uucK0mIk3ZlpocI4mHzVRkN9B3o1+5QDiBFfMX9rWTS3LdkmNY/kdqA5mD2nNPzF"
+"N3EjAgMBAAGjYDBeMB8GA1UdIwQYMBaAFBm5QDoGKUKbHYUgYY1BSyRUvFs5MB0G"
+"A1UdDgQWBBQwCJm3VeRQ3NWuQqBF/uWzCJAkwTAMBgNVHRMBAf8EAjAAMA4GA1Ud"
+"DwEB/wQEAwIHgDANBgkqhkiG9w0BAQsFAAOCAQEAllglaITox4VW0l/y55+Gc4GU"
+"RjghzJszsfxgktTqn2hJ2vRxVSlyOgF7AythXclPLpLao56nsFpjsFc+6hhnrfP9"
+"uhlOovtdC26H8lcnn4ix7oAc4A5PwLv6Lm+x/EvPITyxvzIMYOT4FSV17KI/rh3D"
+"rNBBeKJ880IoWCfgBUPMBahFmymV6VO2eDpZBWaSK1fn269JGiLy08LQRetKC72T"
+"fXmcjgHMNysskXk6njfLQyUEthiPpd7w4ZvB95IPCr5ldD6ObGWnp2uzTsGKrgSO"
+"JWSRdBLitPgzEFo7QY4tP19Fhe+ERH+sk5+nwn58tU8Gl1lv5/zobZsnFip2mg==";*/
 
 /*
  * USER STEP: Copy the lines in the privateKey.pem certificate file between
@@ -84,7 +129,32 @@ const char client_cert_pem[] = "[client certificate string]";
  *
  *            Paste the lines in string format for the following array:
  */
-const char client_private_key_pem[] ="[client private key string]";
+/*const char client_private_key_pem[] =
+"MIIEpQIBAAKCAQEAtYRG3k4XEG/FbJ3Jen1Zd397kIP6mkyTHE8yQQ27PNYe+Yhf"
+"YlyT3UtbIKkZc5EDiegqbgbyn+LK7V/r3ALRp3loeCbXpY3TxiVc14ePRYC/VxHN"
+"eB5wmH/EE+uvWmi7Uq87RMm9ug8EovHWi42ao05JZ7QIMb1d0mxz8+8RudufBaU8"
+"I7donsDuR+A+6GqrhjoCpjo+jXvf2nSPJ1o3J+B41szyOBdicrUMbvlaqMPc67H9"
+"sLvn5He1B9cDRw+TBC94AN4DXzKZGVpPGrrnCtJiJN2ZaaHCOJh81UZDfQd6NfuU"
+"A4gRXzF/a1k0ty3ZJjWP5HagOZg9pzT8xTdxIwIDAQABAoIBAQCTugDXQeSheuXI"
+"/S2RY9zhVT5iIhddZn6/pnC24w8EdxskaGmAqumoS4Dxts3A8T9ZCDsn6r2hhDk1"
+"MUDKgPzR+Qwd5TbSRPgapiPGQUxH+309xn5biSKH6kvRDppa0SvLIlPxKuMfPsO+"
+"PWYnk2pMCBXTsYCNwplN/Pftih76C7IXVSFUENvb/fYzReLY4uZV9GOagTeMD6wP"
+"IWQD2zHBsm7/6dCHdY01EbvVa1Fcvt6kTqvDx4VcDsVvgnfYUZXbHosAEH7Wit9C"
+"uNUNXtchTZEsraatJpaeYB26TsWG1wquAm40wLngwXc8UzxIoRJKzfnKZO0aAP+q"
+"+xWRI38xAoGBAPhzaE8jgUnZ8qdCLLZQBYVuDebDEcyP8seT9Qc3ZBejq4OQGqvw"
+"1iDDIbeugqWfkRYleLpGibx3HthssrfrYIm9AcXDA7+zDqf4KpW0NwC1OFGNJFHy"
+"oMjput7LPpe3cHV3pFFJTwBfcGFLcJPhX5uq0FuuLFwqa/nk7mKh96M7AoGBALsI"
+"N7XNvfJIBlnelCrKqJGWqgQYi6sppy23ab1j3ONn6De3YQ6jpe5nXptuVzLJd5tO"
+"wiZLBoo7dDP+BS5jazJl8oBYm76LNhSwAn990DeGYKTh0SzNu4nDj7QsWF+ZH3/c"
+"D1TuhAFjYSS9VesrFtmWSpi16O5T8S1yAKO1CLs5AoGBAJN2XCjsl+Yvd/iSLFuh"
+"L0W8xn96tGvH3H9ccAhydfQZ7sjNlScMcOtNJgwRhfWrub99SiS1jTbRNPubuI+1"
+"Ir1d81lfoC/9pOtJPm1QY30GEoFE1pPVAF1/bKyj0WjXNeZitqKQclV0UA1Pa2g6"
+"UjbgsX5Y6HdjrmbJ3DuqioLVAoGBALUKuVKEe08hJPStHWNmlFGJM72PPPNL+IWq"
+"OvKWzeRaWlBEc/DFvALPkKaH4mRI3Dw7undyvDvmXQ9O3hkPJ167jEdsfiWtf4X6"
+"8hAS6xA0RSyVYfMqmlQ6NspC+rBe+jy7+SNPVfw6BHiZxadEKHQqpL65p2W7X4OM"
+"DM5qmK8RAoGAdg/W0sBFmEm97TEXt5ZsGA7yOL+o6UNwchoNzSpIrNdNjz6D8zF+"
+"cIpRGEDGPYKPsQXqcdwvIv5GDjkdTQFOjlq/Nv4O4kFu2OCRjd0DjS+11ux/pK8m"
+"i2XiPZ9LSNhfy+j5qEwCsmc5SKy7zF8hw+1UhIeso0FLFr62XHeqBVY=";*/
 
 /*
  *  In this release, the cert files must exist as shown below, as the

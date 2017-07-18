@@ -14,6 +14,7 @@ APP_SRC_FILES = $(APP_NAME).c
 
 #IoT client directory
 IOT_CLIENT_DIR = ../../..
+WIRINGPI_DIR = ../../../..
 
 PLATFORM_DIR = $(IOT_CLIENT_DIR)/platform/linux/mbedtls
 PLATFORM_COMMON_DIR = $(IOT_CLIENT_DIR)/platform/linux/common
@@ -22,11 +23,13 @@ IOT_INCLUDE_DIRS += -I $(IOT_CLIENT_DIR)/include
 IOT_INCLUDE_DIRS += -I $(IOT_CLIENT_DIR)/external_libs/jsmn
 IOT_INCLUDE_DIRS += -I $(PLATFORM_COMMON_DIR)
 IOT_INCLUDE_DIRS += -I $(PLATFORM_DIR)
+IOT_INCLUDE_DIRS += -I ../../../../wiringPi/wiringPi
 
 IOT_SRC_FILES += $(shell find $(IOT_CLIENT_DIR)/src/ -name '*.c')
 IOT_SRC_FILES += $(shell find $(IOT_CLIENT_DIR)/external_libs/jsmn -name '*.c')
 IOT_SRC_FILES += $(shell find $(PLATFORM_DIR)/ -name '*.c')
 IOT_SRC_FILES += $(shell find $(PLATFORM_COMMON_DIR)/ -name '*.c')
+IOT_SRC_FILES += $(shell find ../../../../wiringPi/wiringPi -name '*.c')
 
 #TLS - mbedtls
 MBEDTLS_DIR = $(IOT_CLIENT_DIR)/external_libs/mbedTLS

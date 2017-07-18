@@ -16,9 +16,9 @@
 #
 
 ###### User Step: Update install paths to XDCtools, TI-RTOS, and Compiler ######
-XDC_INSTALL_DIR       = /path/to/xdctools_installation
-TIRTOS_INSTALL_DIR    = /path/to/tirtos_installation
-TI_ARM_CODEGEN_INSTALL_DIR = /path/to/TI_ARM_compiler
+XDC_INSTALL_DIR       = /home/mdubuntu/ti/xdctools_3_32_00_06_core
+TIRTOS_INSTALL_DIR    = /home/mdubuntu/ti/tirtos_cc32xx_2_16_01_14
+TI_ARM_CODEGEN_INSTALL_DIR = /home/mdubuntu/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5
 
 ###### Below dependencies are determined automatically ######
 TIDRIVERS_INSTALL_DIR := $(wildcard $(TIRTOS_INSTALL_DIR)/products/tidrivers_*)

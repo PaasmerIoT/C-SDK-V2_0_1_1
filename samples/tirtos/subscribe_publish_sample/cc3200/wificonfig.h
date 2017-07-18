@@ -33,8 +33,8 @@
 #define WIFICONFIG_H
 
 /* USER STEP: Update these macros */
-#define SSID ""
-#define SECURITY_KEY ""
+#define SSID "SSID"
+#define SECURITY_KEY "Password"
 #define SECURITY_TYPE SL_SEC_TYPE_WPA
 
 #endif

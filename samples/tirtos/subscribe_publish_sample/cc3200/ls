@@ -1,0 +1,13 @@
+#define UserName "hari.krish@mobodexter.com" //your user name in website
+
+#define DeviceName "Test" //your device name
+
+#define timePeriod 2 //change the time delay as you required for sending sensor values to paasmer cloud
+
+char feedname[][10]={"dummy","feed0","feed1","feed2","water","drum","feed3","feed4","feed5","ultrasoni","distance"};
+
+char feedtype[][10]={"sensor","sensor","actuator","sensor","sensor","sensor","sensor","actuator","actuator","sensor","sensor"};
+
+char feedbase[][15]={"GPIOA4_BASE","GPIOA1_BASE","GPIOA2_BASE","GPIOA3_BASE","GPIOA2_BASE","GPIOA2_BASE","GPIOA1_BASE","GPIOA3_BASE","GPIOA2_BASE","GPIOA3_BASE","GPIOA2_BASE"};
+
+char feedpin[][5]={"0x70","0x10","0x2","0x30","0x40","0x80","0x30","0x40","0x2","0x1","0x10"};

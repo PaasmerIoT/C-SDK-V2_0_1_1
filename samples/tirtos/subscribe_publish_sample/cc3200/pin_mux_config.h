@@ -47,4 +47,4 @@
 
 extern void PinMuxConfig(void);
 
-#endif //  __PIN_MUX_CONFIG_H__
+#endif //  __PIN_MUX_CONFIG_H_

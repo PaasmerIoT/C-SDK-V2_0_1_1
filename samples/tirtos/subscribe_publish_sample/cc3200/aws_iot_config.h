@@ -23,10 +23,10 @@
 
 // Get from console
 // =================================================
-#define AWS_IOT_MQTT_HOST              "" ///< Customer specific MQTT HOST. The same will be used for Thing Shadow
+#define AWS_IOT_MQTT_HOST              "a3rwl3kghmkdtx.iot.us-west-2.amazonaws.com" ///< Customer specific MQTT HOST. The same will be used for Thing Shadow
 #define AWS_IOT_MQTT_PORT              8883 ///< default port for MQTT/S
-#define AWS_IOT_MQTT_CLIENT_ID         "c-sdk-client-id" ///< MQTT client ID should be unique for every device
-#define AWS_IOT_MY_THING_NAME 		   "AWS-IoT-C-SDK" ///< Thing Name of the Shadow this device is associated with
+#define AWS_IOT_MQTT_CLIENT_ID         "85g53"//"c-sdk-client-id" ///< MQTT client ID should be unique for every device
+#define AWS_IOT_MY_THING_NAME 		   "CC3200" ///< Thing Name of the Shadow this device is associated with
 /*
  *  The following cert file variables are not used in this release. All
  *  cert files must exist in the "/cert" directory and be named "ca.der",
