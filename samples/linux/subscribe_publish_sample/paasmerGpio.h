@@ -59,7 +59,8 @@ void gpioWrite(int pinNum,int state)
 int gpioRead(int pinNum)
 {
 	int res=0;
-	if(strcmp(deviceType,"Raspberry"))
+	if((strcmp(deviceType,"raspberrypi")) || (strcmp(deviceType,"bananapi")) || (strcmp(deviceType,"orangepi")) || (strcmp(deviceType,"odroidxu4")))
+	//if(strcmp(deviceType,"Raspberry"))
         {
 		//res = digitalRead(pinNum);
 		sprintf(command,"gpio -1 read %d",pinNum);
