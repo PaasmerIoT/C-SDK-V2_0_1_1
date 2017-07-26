@@ -1,15 +1,23 @@
 #include "device.h"
 #include <stdio.h>
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 char command[100];
 
 void gpioSetup()
 {
 	if((!strcmp(deviceType,"raspberrypi")) || (!strcmp(deviceType,"bananapi")) || (!strcmp(deviceType,"orangepi")) || (!strcmp(deviceType,"odroidxu4")))
+<<<<<<< HEAD
 	{
 	}
 	else if(!strcmp(deviceType,"beaglebone"))
 	{
+=======
+	{
+		
+>>>>>>> origin/master
 	}
 	else;
 }
@@ -79,7 +87,11 @@ int gpioRead(int pinNum)
 {
 	int res=0;
 	if((!strcmp(deviceType,"raspberrypi")) || (!strcmp(deviceType,"bananapi")) || (!strcmp(deviceType,"orangepi")) || (!strcmp(deviceType,"odroidxu4")))
+<<<<<<< HEAD
         {
+=======
+	{
+>>>>>>> origin/master
 		sprintf(command,"gpio -1 read %d",pinNum);
 		FILE *fp = popen(command,"r");
 		char data[10];
@@ -87,6 +99,7 @@ int gpioRead(int pinNum)
 		pclose(fp);
 		strcpy(command,"\0");
 		res = atoi(data);
+<<<<<<< HEAD
 	}
 	else if(!strcmp(deviceType,"beaglebone"))
 	{
@@ -97,6 +110,8 @@ int gpioRead(int pinNum)
                 pclose(fp);
                 strcpy(command,"\0");
                 res = atoi(data);
+=======
+>>>>>>> origin/master
 	}
 	else;
 	return res;
