@@ -1,31 +1,23 @@
 #include "device.h"
 #include <stdio.h>
-//#include <../../../../wiringPi/wiringPi/wiringPi.h>
 
-
-//#define OUT 2
-//#define IN 4
-//#define HIGH 2
-//#define LOW 4
-//#define deviceType
 char command[100];
 
 void gpioSetup()
 {
-	if((strcmp(deviceType,"raspberrypi")) || (strcmp(deviceType,"bananapi")) || (strcmp(deviceType,"orangepi")) || (strcmp(deviceType,"odroidxu4")))
-	//if(deviceType == "Raspberry")
+	if((!strcmp(deviceType,"raspberrypi")) || (!strcmp(deviceType,"bananapi")) || (!strcmp(deviceType,"orangepi")) || (!strcmp(deviceType,"odroidxu4")))
 	{
-		//wiringPiSetup();
+	}
+	else if(!strcmp(deviceType,"beaglebone"))
+	{
 	}
 	else;
 }
 
 void gpioModesetup(int pinNum,char *mode)
 {
-	//if(strcmp(deviceType,"raspberry"))
-	if((strcmp(deviceType,"raspberrypi")) || (strcmp(deviceType,"bananapi")) || (strcmp(deviceType,"orangepi")) || (strcmp(deviceType,"odroidxu4")))
+	if((!strcmp(deviceType,"raspberrypi")) || (!strcmp(deviceType,"bananapi")) || (!strcmp(deviceType,"orangepi")) || (!strcmp(deviceType,"odroidxu4")))
 	{
-		//pinMode(pinNum,mode);
 		if(mode == "OUT")
 		{
 			sprintf(command,"gpio -1 mode %d out",pinNum);
@@ -40,18 +32,45 @@ void gpioModesetup(int pinNum,char *mode)
 
 		}
 	}
+	else if(!strcmp(deviceType,"beaglebone"))
+	{
+		if(mode == "OUT")
+                {
+                        sprintf(command,"sudo echo %d > /sys/class/gpio/export",pinNum);
+                        system(command);
+                        strcpy(command,"\0");
+			sprintf(command,"sudo echo out > /sys/class/gpio/gpio%d/direction",pinNum);
+                        system(command);
+                        strcpy(command,"\0");
+
+                }
+                else if(mode == "IN")
+                {
+                        sprintf(command,"sudo echo %d > /sys/class/gpio/export",pinNum);
+                        system(command);
+                        strcpy(command,"\0");
+                        sprintf(command,"sudo echo in > /sys/class/gpio/gpio%d/direction",pinNum);
+                        system(command);
+                        strcpy(command,"\0");
+                }
+
+	}
 	else;
 }
 
 void gpioWrite(int pinNum,int state)
 {
-	//if(strcmp(deviceType,"raspberry"))
-	if((strcmp(deviceType,"raspberrypi")) || (strcmp(deviceType,"bananapi")) || (strcmp(deviceType,"orangepi")) || (strcmp(deviceType,"odroidxu4")))
+	if((!strcmp(deviceType,"raspberrypi")) || (!strcmp(deviceType,"bananapi")) || (!strcmp(deviceType,"orangepi")) || (!strcmp(deviceType,"odroidxu4")))
 	{
-		//digitalWrite(pinNum,state);
 		sprintf(command,"gpio -1 write %d %d",pinNum,state);
 		system(command);
 		strcpy(command,"\0");
+	}
+	else if(!strcmp(deviceType,"beaglebone"))
+	{
+                sprintf(command,"sudo echo %d > /sys/class/gpio/gpio%d/value",state,pinNum);
+                system(command);
+                strcpy(command,"\0");
 	}
 	else;
 }
@@ -59,18 +78,25 @@ void gpioWrite(int pinNum,int state)
 int gpioRead(int pinNum)
 {
 	int res=0;
-	if(strcmp(deviceType,"Raspberry"))
+	if((!strcmp(deviceType,"raspberrypi")) || (!strcmp(deviceType,"bananapi")) || (!strcmp(deviceType,"orangepi")) || (!strcmp(deviceType,"odroidxu4")))
         {
-		//res = digitalRead(pinNum);
 		sprintf(command,"gpio -1 read %d",pinNum);
-		//res = system(command);
 		FILE *fp = popen(command,"r");
 		char data[10];
 		fgets(data,10,fp);
 		pclose(fp);
 		strcpy(command,"\0");
 		res = atoi(data);
-		//printf("%d",res);
+	}
+	else if(!strcmp(deviceType,"beaglebone"))
+	{
+		sprintf(command,"sudo cat /sys/class/gpio/gpio%d/value",pinNum);
+		FILE *fp = popen(command,"r");
+                char data[10];
+                fgets(data,10,fp);
+                pclose(fp);
+                strcpy(command,"\0");
+                res = atoi(data);
 	}
 	else;
 	return res;

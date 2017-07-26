@@ -104,6 +104,7 @@ char* feedpin[]={"0x10","0x2","0x30","0x40","0x50",.....}; //modify with GPIO He
       
 * Compile the code and generate output file.
 ```
+$ sudo chmod 777 ./*
 $ sudo ./cc3200_Build.sh 
 ```
 <a name="Setup-CCS"></a>
@@ -140,7 +141,7 @@ $ sudo ./cc3200_Build.sh
 ## Running The Certificate Flasher Tool
 All samples rely on a set of certificates from AWS. As a result, the certificates need to be stored once into flash memory prior to running the samples. To flash the certificates, simply run the flasher tool you have previously [built](#Build-TOOL) using this procedure:
 
-1. Select Run menu -> Load -> Load Program..., and browse to the file `certflasher.out` in `<CC3200-SDK_INSTALL_DIR>/PAASMER-CC3200-$no/tirtos/certs/cc3200`. Hit OK. This will load the program onto the board.
+1. Select Run menu -> Load -> Load Program..., and browse to the file `certflasher.out` in `<CC3200-SDK_INSTALL_DIR>/<YOUR DEVICE NAME FOLDER>`. Hit OK. This will load the program onto the board.
 
 2. Run the application by pressing F8. The output in the CCS Console looks as follows:
 
@@ -156,7 +157,7 @@ All samples rely on a set of certificates from AWS. As a result, the certificate
 ## Running A Sample
 1. Disconnect and reconnect the CC3200's USB cable to power cycle the hardware, and then reconnect in CCS.  For best results, it is recommended to do this before loading and running an application every time, in order to reset the CC3200's network processor.
 
-2. Select Run menu -> Load -> Load Program..., and browse to the file `subscribe_publish_sample.out` in `<CC3200-SDK_INSTALL_DIR>/PAASMER-CC3200-$no/tirtos/subscribe_publish_sample/cc3200`. Hit OK. This will load the program onto the board. (The same procedure applies to other samples by substituting `subscribe_publish_sample`)
+2. Select Run menu -> Load -> Load Program..., and browse to the file `subscribe_publish_sample.out` in `<CC3200-SDK_INSTALL_DIR>/<YOUR DEVICE NAME FOLDER>`. Hit OK. This will load the program onto the board. (The same procedure applies to other samples by substituting `subscribe_publish_sample`)
 
 3. Run the application by pressing F8.
 
