@@ -3,11 +3,11 @@
 
 ## Overview
 
-The **Paasmer SDK** for **Single Board Computers (SBC)** like Raspberry-PI, Banana-PI, Orange-PI, Odroidxu4 and also for **CC3200 LaunchPad XL** is a collection of source files that enables you to connect to the Paasmer IoT Platform. It includes the transport client for **MQTT** with **TLS** support.  It is distributed in source form and intended to be built into customer firmware along with application code, other libraries and RTOS.
+The **Paasmer SDK** for **Single Board Computers (SBC)** like Raspberry-PI, Banana-PI, Orange-PI, Odroidxu4, BeagleBone Black and also for **CC3200 LaunchPad XL** is a collection of source files that enables you to connect to the Paasmer IoT Platform. It includes the transport client for **MQTT** with **TLS** support.  It is distributed in source form and intended to be built into customer firmware along with application code, other libraries and RTOS.
 
 ## Features
 
-The **SBC-CC3200-SDK** simplifies access to the Pub/Sub functionality of the **Paasmer IoT** broker via **MQTT**. The SDK has been tested to work on the **Raspberrp Pi 3** running Raspbian Jessie and on the **CC3200 LaunchPad XL** running TI-RTOS. Support for Other SBC's running any flavors of Linux would be available shortly.
+The **SBC-CC3200-SDK** simplifies access to the Pub/Sub functionality of the **Paasmer IoT** broker via **MQTT**. The SDK has been tested to work on the **Raspberrp Pi 3** running Raspbian Jessie, **BeagleBone Black** running Debian and on the **CC3200 LaunchPad XL** running TI-RTOS. Support for Other SBC's running any flavors of Linux would be available shortly.
 
 ## MQTT Connection
 
